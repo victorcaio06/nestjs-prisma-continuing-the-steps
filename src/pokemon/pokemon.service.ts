@@ -19,14 +19,18 @@ export class PokemonService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} pokemon`;
+    return this.prismaService.pokemon.findUnique({ where: { id } });
   }
 
   update(id: number, updatePokemonDto: UpdatePokemonDto) {
-    return `This action updates a #${id} pokemon`;
+    const { name, height } = updatePokemonDto;
+    return this.prismaService.pokemon.update({
+      where: { id },
+      data: { name, height },
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} pokemon`;
+    return this.prismaService.pokemon.delete({ where: { id } });
   }
 }
