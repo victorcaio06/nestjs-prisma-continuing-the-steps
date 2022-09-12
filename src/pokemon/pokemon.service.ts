@@ -11,15 +11,21 @@ export class PokemonService {
     const { name, height, images } = createPokemonDto;
     return this.prismaService.pokemon.create({
       data: { name: name, height: height, images: images },
+      include: { images: { select: { url: true } } },
     });
   }
 
   findAll() {
-    return this.prismaService.pokemon.findMany();
+    return this.prismaService.pokemon.findMany({
+      include: { images: { select: { url: true } } },
+    });
   }
 
   findOne(id: number) {
-    return this.prismaService.pokemon.findUnique({ where: { id } });
+    return this.prismaService.pokemon.findUnique({
+      where: { id },
+      include: { images: { select: { url: true } } },
+    });
   }
 
   update(id: number, updatePokemonDto: UpdatePokemonDto) {
@@ -27,10 +33,13 @@ export class PokemonService {
     return this.prismaService.pokemon.update({
       where: { id },
       data: { name, height },
+      include: { images: { select: { url: true } } },
     });
   }
 
   remove(id: number) {
-    return this.prismaService.pokemon.delete({ where: { id } });
+    return this.prismaService.pokemon.delete({
+      where: { id },
+    });
   }
 }
