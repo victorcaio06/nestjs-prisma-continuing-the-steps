@@ -1,1 +1,6 @@
-export class Pokemon {}
+export class Pokemon {
+  id?: number;
+  name: string;
+  height?: number;
+  images
+}

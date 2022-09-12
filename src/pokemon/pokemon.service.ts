@@ -7,12 +7,15 @@ import { PrismaService } from '../prisma/prisma.service';
 export class PokemonService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  create(createPokemonDto: CreatePokemonDto) {
-    return 'This action adds a new pokemon';
+  async create(createPokemonDto: CreatePokemonDto) {
+    const { name, height, images } = createPokemonDto;
+    return this.prismaService.pokemon.create({
+      data: { name: name, height: height, images: images },
+    });
   }
 
   findAll() {
-    return `This action returns all pokemon`;
+    return this.prismaService.pokemon.findMany();
   }
 
   findOne(id: number) {
